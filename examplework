@@ -1,0 +1,25 @@
+
+        public static SqlString GUDIDservice([SqlFacet(MaxSize = -1)] String value, SqlString certificate, SqlString username, SqlString userpwd, SqlString contenttype, SqlString accept)
+        {
+            string url;
+            url = "https://accessgudid.nlm.nih.gov/api/v1/parse_udi.json?udi=" + System.Uri.EscapeDataString(value);
+            HttpWebRequest webRequest = httpRequest(url.ToString(), certificate.ToString(), contenttype.ToString());
+            httpRequestCredentials(ref webRequest, url.ToString(), username.ToString(), userpwd.ToString());
+            webRequest.Method = "Get";
+            webRequest.Accept = accept.ToString();
+            return new SqlString(httpResponse(webRequest));
+           // return url;
+        }
+        [return: SqlFacet(MaxSize = -1)]
+        public static SqlString GUDIDlookup([SqlFacet(MaxSize = -1)] String value, SqlString certificate, SqlString username, SqlString userpwd, SqlString contenttype, SqlString accept)
+        {
+            string url;
+            url = "https://accessgudid.nlm.nih.gov/api/v1/devices/lookup.json?di=" + System.Uri.EscapeDataString(value);
+            HttpWebRequest webRequest = httpRequest(url.ToString(), certificate.ToString(), contenttype.ToString());
+            httpRequestCredentials(ref webRequest, url.ToString(), username.ToString(), userpwd.ToString());
+            webRequest.Method = "Get";
+            webRequest.Accept = accept.ToString();
+            return new SqlString(httpResponse(webRequest));
+           
+        }
+        [return: SqlFacet(MaxSize = -1)]
